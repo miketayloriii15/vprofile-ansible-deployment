@@ -1,49 +1,84 @@
-vProfile — DevOps Automation with Ansible
+vProfile — Multi-Tier Web Application DevOps Automation
 
-This project demonstrates how to automate the provisioning and deployment of a full Java web application stack using Ansible.
-It sets up all the components needed to run a production-ready Spring MVC application:
+This project is my baseline DevOps environment for future work.
+From my Windows laptop, I use Vagrant and Ansible to automatically create and configure a multi-tier social media web application stack.
+It’s a real-world style setup that helped me learn how to build and run complex systems locally before moving to the cloud.
 
-Application server: Apache Tomcat (for running the Java/Spring app)
+🌐 Project Architecture
+Application & Services
 
-Database: MySQL 8 (with an included SQL dump to restore the app’s schema and data)
+NGINX – reverse proxy & load balancer
 
-Caching: Memcached (active & standby)
+Apache Tomcat – runs the Spring MVC Java application
 
-Messaging: RabbitMQ (for asynchronous communication)
+RabbitMQ – message broker for asynchronous communication
 
-Search engine: Elasticsearch (for indexing and search features)
+Memcached – caching layer
 
-The Ansible playbooks handle installing and configuring each service, deploying the application WAR file, and preparing the environment automatically — so you can go from a fresh server to a running app with one command.
+MySQL – relational database for the app’s data
 
-This project is useful for learning and showcasing DevOps skills such as:
+Automation & Tools
 
-Infrastructure as Code (IaC) with Ansible
+Vagrant – VM creation and lifecycle management
 
-Automated deployments of Java/Spring applications
+VirtualBox – hypervisor used to run the VMs
 
-Setting up a complete multi-tier stack (database, cache, message broker, search, app server)
+Ansible – automated provisioning and configuration
 
-Managing Linux services and environment-specific templates
+Git Bash – CLI used on Windows to run Vagrant/Ansible commands
 
-Prerequisites
+Git / GitHub – version control and project hosting
 
-JDK 17 or 21
+🏗️ VM Layout
+VM Name	Role	Main Services
+lb01	Load balancer	NGINX
+app01	Application server	Tomcat, Maven
+db01	Database	MySQL / MariaDB
+mc01	Caching	Memcached
+rmq01	Messaging	RabbitMQ
+es01	Search (optional / for learning)	Elasticsearch
 
-Maven 3.9
+All of these machines are created locally by Vagrant + VirtualBox, then fully provisioned by Ansible playbooks.
 
-MySQL 8
+🚀 Why I Built This
 
-Technologies
+Local multi-tier web app setup — practice building a full stack on my laptop before deploying to cloud environments.
 
-Spring MVC
+Real-world baseline — this environment will be the foundation for my upcoming DevOps and cloud projects.
 
-Spring Security
+VM automation — create, configure, and deploy a full environment automatically from Windows.
 
-Spring Data JPA
+Hands-on DevOps learning — Infrastructure as Code, provisioning, Linux service management, and app deployment.
 
-Maven
+⚙️ How to Run
 
-JSP
+Install Vagrant
+ and VirtualBox
+ on Windows.
+
+Install Git Bash
+ (if not already installed).
+
+Clone the repo:
+
+git clone https://github.com/yourusername/vprofile-ansible-deployment.git
+cd vprofile-ansible-deployment
+
+
+Start the whole stack:
+
+vagrant up
+
+
+Vagrant spins up the VMs in VirtualBox.
+
+Ansible automatically provisions each VM (installs NGINX, Tomcat, RabbitMQ, Memcached, MySQL, deploys the app, etc.).
+
+When the playbooks finish, the application is up and running locally behind the NGINX load balancer.
+
+🛠 Technologies
+
+Spring MVC / Spring Security / Spring Data JPA
 
 Tomcat
 
@@ -55,19 +90,24 @@ RabbitMQ
 
 Elasticsearch
 
-Database
+Maven
 
-This project uses a MySQL database.
-A database dump file is included at:
+NGINX
+
+Vagrant / Ansible / VirtualBox
+
+🗄 Database
+
+A MySQL dump is included:
 
 /src/main/resources/db_backup.sql
 
 
-To import it:
+To restore manually (if needed):
 
 mysql -u <user_name> -p accounts < db_backup.sql
 
+✨ Summary
 
-To load it into your MySQL server, run:
-
-mysql -u <user_name> -p accounts < db_backup.sql
+This repository shows a real-world DevOps workflow — creating a multi-tier Java/Spring web application stack using Vagrant, VirtualBox, and Ansible, all automated from a Windows machine.
+It’s my personal baseline for future projects and a hands-on example of provisioning, deployment, and infrastructure automation.
